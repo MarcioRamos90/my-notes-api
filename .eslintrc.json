@@ -1,7 +1,7 @@
 {
   "extends": "standard-with-typescript",
-  "parserOption": {
-    "project": "/.tsconfig.json",
+  "parserOptions": {
+    "project": "./tsconfig.json"
   },
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
