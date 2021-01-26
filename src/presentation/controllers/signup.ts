@@ -3,22 +3,13 @@ import { HttpRequest, HttpResponse } from '../protocols/http'
 
 export class SignUpController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    if (!httpRequest.body.email) {
-      return {
-        statusCode: 400,
-        body: new Error('No email was provided')
-      }
-    }
-    if (!httpRequest.body.name) {
-      return {
-        statusCode: 400,
-        body: new Error('No name was provided')
-      }
-    }
-    if (!httpRequest.body.password) {
-      return {
-        statusCode: 400,
-        body: new Error('No password was provided')
+    const requiredFields = ['email', 'password', 'name']
+    for (const field of requiredFields) {
+      if (!httpRequest.body[field]) {
+        return {
+          statusCode: 400,
+          body: new Error(`No ${field} was provided`)
+        }
       }
     }
     return null
