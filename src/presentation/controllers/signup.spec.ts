@@ -28,4 +28,18 @@ describe('SignUpController', () => {
       body: new Error('No name was provided')
     })
   })
+
+  it('Should SignUpController returns statusCode 400 if no password is provided', async () => {
+    const sut = new SignUpController()
+    const promise = await sut.handle({
+      body: {
+        name: 'any_name',
+        email: 'any_email'
+      }
+    })
+    expect(promise).toEqual({
+      statusCode: 400,
+      body: new Error('No password was provided')
+    })
+  })
 })
