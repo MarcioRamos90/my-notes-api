@@ -15,6 +15,12 @@ export class SignUpController implements Controller {
         body: new Error('No name was provided')
       }
     }
+    if (!httpRequest.body.password) {
+      return {
+        statusCode: 400,
+        body: new Error('No password was provided')
+      }
+    }
     return null
   }
 }
