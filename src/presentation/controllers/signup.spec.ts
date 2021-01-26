@@ -1,5 +1,7 @@
 import { HttpRequest } from '../protocols/http'
 import { SignUpController } from './signup'
+import { MissingParamError } from '../errors/missing-param-error'
+import { badRequest } from '../helpers/http/http-helper'
 
 const fakeRequest = (body): HttpRequest => {
   return { body }
@@ -21,10 +23,7 @@ describe('SignUpController', () => {
       password: 'any_password',
       name: 'any_name'
     }))
-    expect(response).toEqual({
-      statusCode: 400,
-      body: new Error('No email was provided')
-    })
+    expect(response).toEqual(badRequest(new MissingParamError('email')))
   })
 
   it('Should SignUpController returns statusCode 400 if no name is provided', async () => {
@@ -33,10 +32,7 @@ describe('SignUpController', () => {
       password: 'any_password',
       email: 'any_email'
     }))
-    expect(response).toEqual({
-      statusCode: 400,
-      body: new Error('No name was provided')
-    })
+    expect(response).toEqual(badRequest(new MissingParamError('name')))
   })
 
   it('Should SignUpController returns statusCode 400 if no password is provided', async () => {
@@ -45,9 +41,6 @@ describe('SignUpController', () => {
       name: 'any_name',
       email: 'any_email'
     }))
-    expect(response).toEqual({
-      statusCode: 400,
-      body: new Error('No password was provided')
-    })
+    expect(response).toEqual(badRequest(new MissingParamError('password')))
   })
 })
